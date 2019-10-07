@@ -1,4 +1,4 @@
-# Musician Network from DBPpedia
+# Musician Network from DBPedia
 
 * ID - dbpedia_musician
 * Description - Musicians and their groups
