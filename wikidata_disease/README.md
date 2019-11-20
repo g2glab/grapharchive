@@ -8,7 +8,7 @@
 * Node Count - 10488
 * Edge Count - 11770
 
-## Sample lines
+## Sampled lines
 
 ### Nodes - diseases
 ```
