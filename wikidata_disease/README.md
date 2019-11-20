@@ -4,7 +4,7 @@
 * Description - Wikidata disease-related data
 * Data Source - [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page)
 * License - CC0
-* Size - 1.9MB
+* Size - 1.9 MB
 * Node Count - 10488
 * Edge Count - 11770
 
