@@ -1,2 +1,2 @@
-# Wikidata disease-related information
+# Wikidata disease-related data
 
