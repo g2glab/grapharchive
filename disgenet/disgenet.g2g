@@ -1,0 +1,21 @@
+(d:Disease {name:l})
+    ?d rdf:type ncit:C7057 .
+    OPTIONAL { ?d rdfs:label ?l }
+    FILTER REGEX(?d, "umls/id")
+
+(g:Gene {name:l, symbol:s, specifisity:ds, pleiotropy:dp})
+    ?g rdf:type ncit:C16612 .
+    OPTIONAL { ?g rdfs:label ?l }
+    OPTIONAL { ?g sio:SIO_000205 [ rdfs:label ?s ] } # Gene Symbol
+    OPTIONAL { ?g sio:SIO_000216 [ rdf:type sio:SIO_001351 ; sio:SIO_000300 ?ds ] } # Disease Specificity
+    OPTIONAL { ?g sio:SIO_000216 [ rdf:type sio:SIO_001352 ; sio:SIO_000300 ?dp ] } # Disease Pleiotropy
+    FILTER REGEX(?g, "ncbigene")
+
+(d:Disease)-[:associates {year:y, score:s}]->(g:Gene)
+    ?a sio:SIO_000628 ?d .
+    ?a sio:SIO_000628 ?g .
+    OPTIONAL { ?a dcterms:date ?y }
+    # OPTIONAL { ?a dcterms:description ?d }
+    OPTIONAL { ?a sio:SIO_000216 [ sio:SIO_000300 ?s ] } # Score
+    # OPTIONAL { ?a sio:SIO_000253 ?s }                  # Source
+    # OPTIONAL { ?a sio:SIO_000772 [ dcterms:issued ?i ] } # Issued Year
