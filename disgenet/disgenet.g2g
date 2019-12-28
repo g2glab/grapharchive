@@ -1,17 +1,26 @@
 (d:Disease {name:l})
     ?d rdf:type ncit:C7057 .
     OPTIONAL { ?d rdfs:label ?l }
+    OPTIONAL { ?d sio:SIO_000095 [ rdfs:label ?l ] } # MeSH Disease Class
     FILTER REGEX(?d, "umls/id")
 
-(g:Gene {name:l, symbol:s, specifisity:ds, pleiotropy:dp})
+(g:Gene {name:l, symbol:s, specifisity:ds, pleiotropy:dp, protein:p})
     ?g rdf:type ncit:C16612 .
     OPTIONAL { ?g rdfs:label ?l }
     OPTIONAL { ?g sio:SIO_000205 [ rdfs:label ?s ] } # Gene Symbol
     OPTIONAL { ?g sio:SIO_000216 [ rdf:type sio:SIO_001351 ; sio:SIO_000300 ?ds ] } # Disease Specificity
     OPTIONAL { ?g sio:SIO_000216 [ rdf:type sio:SIO_001352 ; sio:SIO_000300 ?dp ] } # Disease Pleiotropy
+    OPTIONAL { ?g sio:SIO_010078 [ rdf:type ncit:C17021 ; rdfs:label ?p ] } # Protein
     FILTER REGEX(?g, "ncbigene")
 
-(d:Disease)-[:associates {year:y, score:s}]->(g:Gene)
+(v:Variant {chromosome:c, position:p, ref_allele:ra, alt_allele:aa})
+    ?v rdf:type so:0001060 .
+    OPTIONAL { ?v sio:SIO_000061 [ sio:SIO_000300 ?c ] } # Chromosome
+    OPTIONAL { ?v sio:SIO_000791 [ sio:SIO_000300 ?p ] } # Chromosome Position
+    OPTIONAL { ?v sio:SIO_000223 [ rdf:type geno:0000152 ; sio:SIO_000300 ?ra ] } # Reference Allele
+    OPTIONAL { ?v sio:SIO_000223 [ rdf:type geno:0000476 ; sio:SIO_000300 ?aa ] } # Alternative Allele
+
+(d:Disease)-[:hasAssociatedGene {year:y, score:s}]->(g:Gene)
     ?a sio:SIO_000628 ?d .
     ?a sio:SIO_000628 ?g .
     OPTIONAL { ?a dcterms:date ?y }
@@ -19,3 +28,9 @@
     OPTIONAL { ?a sio:SIO_000216 [ sio:SIO_000300 ?s ] } # Score
     # OPTIONAL { ?a sio:SIO_000253 ?s }                  # Source
     # OPTIONAL { ?a sio:SIO_000772 [ dcterms:issued ?i ] } # Issued Year
+
+(d:Disease)-[:hasAssociatedVariant {year:y, score:s}]->(v:Variant)
+    ?a sio:SIO_000628 ?d .
+    ?a sio:SIO_000628 ?v .
+    OPTIONAL { ?a dcterms:date ?y }
+    OPTIONAL { ?a sio:SIO_000216 [ sio:SIO_000300 ?s ] } # Score
