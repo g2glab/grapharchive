@@ -1,7 +1,7 @@
 # DisGeNET
 
 * ID - disgenet
-* Description - Musicians and their groups
+* Description - Diseases and genes
 * Data Source - [DisGeNET](http://www.disgenet.org/)
 * License - CC BY-NC-SA 4.0
 * Size (.pg) - 120 MB
